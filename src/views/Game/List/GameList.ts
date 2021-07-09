@@ -1,4 +1,7 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
 import { GetRequest } from '@/types/Api'
 import Cards from '@/components/Cards/Cards.vue'
 import Grid from '@/components/Grid/Grid.vue'
@@ -8,8 +11,6 @@ import {
 } from '@/api';
 
 import { GameCard, ListView } from '@/types/Game';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'GameList',
@@ -23,13 +24,12 @@ export default defineComponent({
 
     // Сортировка
     const sortList = [
-      { key: 'title', title: 'Название' },
       { key: 'bggRating', title: 'Рейтинг' },
-      { key: 'year', title: 'Год' }
+      { key: 'title', title: 'Название' },
     ];
     const keysSortList = sortList.map(item => item.key);
     type sortTypes = typeof keysSortList[number];
-    const currentSort = ref<sortTypes>('title');
+    const currentSort = ref<sortTypes>('bggRating');
     const changeSort = (value: sortTypes):void => {
       currentSort.value = value;
       getList();
@@ -45,7 +45,6 @@ export default defineComponent({
       const { data } = await getGameList(request)
       gameList.value = data.filter((item: GameCard) => item.alias);
     }
-    getList();
 
 
     // Вид
@@ -68,6 +67,11 @@ export default defineComponent({
 
 
     //////
+    onBeforeMount(() => {
+      if (store.state.currentView) changeView(store.state.currentView);
+      changeSort(store?.state?.currentSort || currentSort.value);
+    });
+
     return { gameList, currentView, changeView, viewTypes, currentSort, sortList, changeSort, openDetail }
   },
 });
