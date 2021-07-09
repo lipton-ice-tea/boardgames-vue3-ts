@@ -1,16 +1,22 @@
 <template>
-    <div class="cards">
-        <router-link
-            v-for="game in list"
-            class="card"
-            :to="`/games/${game.alias}`"
-            :key="game.alias">
-            <el-card>
-                <img v-if="game.photoUrl" :src="game.photoUrl" :alt="game.title">
-                {{ game.title }}
-            </el-card>
-        </router-link>
-    </div>
+    <el-table :data="list">
+        <el-table-column prop="photoUrl" width="70">
+            <template #default="scope">
+                <el-image class="table-img" :src="scope.row.photoUrl"></el-image>
+            </template>
+        </el-table-column>
+        <el-table-column prop="title" label="Название"></el-table-column>
+        <el-table-column prop="bggRating" label="Рейтинг" width="150"></el-table-column>
+        <el-table-column prop="commentsTotal" label="Комментарии" width="150"></el-table-column>
+        <el-table-column prop="year" label="Год" width="150"></el-table-column>
+        <el-table-column prop="playersMin" label="Игроков" width="150"></el-table-column>
+        <el-table-column prop="playersAgeMin" label="Возраст" width="150"></el-table-column>
+        <el-table-column prop="alias" width="150">
+            <template #default="scope">
+                <el-button @click="openDetail(scope.row.alias)">Подробнее</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
 </template>
 
 <script src="./Grid.ts"></script>

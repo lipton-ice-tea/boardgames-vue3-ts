@@ -7,7 +7,9 @@ import {
   getGameList
 } from '@/api';
 
-import { GameItem } from '@/types/Game';
+import { GameCard, ListView } from '@/types/Game';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'GameList',
@@ -16,19 +18,56 @@ export default defineComponent({
     Grid
   },
   setup() {
-    // Список
-    const gameList = ref<GameItem[]>([]);
+    const router = useRouter();
+    const store = useStore();
 
-    const getList = async() => {
+    // Сортировка
+    const sortList = [
+      { key: 'title', title: 'Название' },
+      { key: 'bggRating', title: 'Рейтинг' },
+      { key: 'year', title: 'Год' }
+    ];
+    const keysSortList = sortList.map(item => item.key);
+    type sortTypes = typeof keysSortList[number];
+    const currentSort = ref<sortTypes>('title');
+    const changeSort = (value: sortTypes):void => {
+      currentSort.value = value;
+      getList();
+    };
+
+    // Список
+    const gameList = ref<GameCard[]>([]);
+    const getList = async():Promise<void> => {
       const request: GetRequest = {
-        limit: 20
+        limit: 20,
+        sort: currentSort.value
       }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data } = await getGameList(request)
-      gameList.value = data;
+      gameList.value = data.filter((item: GameCard) => item.alias);
     }
     getList();
 
-    return { gameList }
+
+    // Вид
+    const currentView = ref<ListView>('card');
+    const changeView = (value: ListView):void => {
+      currentView.value = value;
+    };
+    const viewTypes = [
+      { key: 'card' as ListView, icon: 'el-icon-menu' },
+      { key: 'grid' as ListView, icon: 'el-icon-s-unfold' },
+    ];
+
+
+    // Переход к детальной странице
+    const openDetail = (path: string):void => {
+      store.commit('setCurrentSort', currentSort);
+      store.commit('setCurrentView', currentView);
+      router.push(`/${path}`);
+    }
+
+
+    //////
+    return { gameList, currentView, changeView, viewTypes, currentSort, sortList, changeSort, openDetail }
   },
 });

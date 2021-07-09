@@ -1,0 +1,47 @@
+.table-img {
+    width: 5rem;
+    height: 5rem;
+}
+
+.games {
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+    &__view {
+        font-size: 2.4rem;
+    }
+    &__view-type {
+        margin: 0 0.5rem;
+        cursor: pointer;
+        &_current {
+            color: $primary;
+        }
+        &:hover {
+            opacity: 0.5;
+        }
+    }
+}
+
+.game-sort {
+    display: flex;
+    align-items: center;
+    &__item {
+        margin-left: 0.3rem;
+        font-weight: 700;
+        padding: 0.8rem 1.3rem 0.5rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        &_current {
+            background-color: $primary;
+            color: #fff;
+        }
+        &:hover:not(&_current) {
+            background-color: $light;
+        }
+        &:first-of-type {
+            margin-left: 1rem;
+        }
+    }
+}

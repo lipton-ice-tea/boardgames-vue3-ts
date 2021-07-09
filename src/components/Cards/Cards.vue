@@ -1,16 +1,18 @@
 <template>
     <div class="cards">
-        <router-link
-            v-for="game in list"
+        <div
+            v-for="game in computedList"
             class="card"
-            :to="`/games/${game.alias}`"
+            @click="openDetail(game.alias)"
             :key="game.alias">
-            <el-image class="card__img" :src="game.photoUrl"></el-image>
+            <el-image class="card__img game-img" :src="game.photoUrl"></el-image>
             <!-- <img v-if="game.photoUrl" :src="game.photoUrl" :alt="game.title"> -->
-            <div class="card__descr">
-                <p class="card__title">{{ game.title }}</p>
-            </div>
-        </router-link>
+            <p class="card__title" :class="{'card__title_small': game.title.length > 40 }">{{ game.title }}</p>
+            <el-table :data="game.props" :show-header="false">
+                <el-table-column prop="title"></el-table-column>
+                <el-table-column prop="value"></el-table-column>
+            </el-table>
+        </div>
     </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        title
+        <router-link to="/">Назад</router-link>
     </div>
 </template>
 
