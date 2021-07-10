@@ -1,15 +1,23 @@
-import { createStore } from 'vuex'
+import { InjectionKey } from 'vue'
+import { createStore, useStore as baseUseStore, Store } from 'vuex'
+import { ListView, SortType } from '@/types/Game';
 
-export default createStore({
+interface State {
+  currentSort: SortType,
+  currentView: ListView
+}
+export const storeKey: InjectionKey<Store<State>> = Symbol()
+
+export const store = createStore<State>({
   state: {
-    currentSort: '' as string,
-    currentView: '' as string,
+    currentSort: 'bggRating',
+    currentView: 'card',
   },
   mutations: {
-    setCurrentSort(state, currentSort) {
+    setCurrentSort(state, currentSort: SortType) {
       state.currentSort = currentSort;
     },
-    setCurrentView(state, currentView) {
+    setCurrentView(state, currentView: ListView) {
       state.currentView = currentView;
     },
   },
@@ -18,3 +26,8 @@ export default createStore({
   modules: {
   }
 })
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function useStore() {
+  return baseUseStore(storeKey)
+}

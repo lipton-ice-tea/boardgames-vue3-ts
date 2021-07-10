@@ -1,6 +1,6 @@
 import { defineComponent, ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { useStore } from '@/store';
 
 import { GetRequest } from '@/types/Api'
 import Cards from '@/components/Cards/Cards.vue'
@@ -10,7 +10,7 @@ import {
   getGameList
 } from '@/api';
 
-import { GameCard, ListView } from '@/types/Game';
+import { GameCard, ListView, SortType } from '@/types/Game';
 
 export default defineComponent({
   name: 'GameList',
@@ -24,13 +24,11 @@ export default defineComponent({
 
     // Сортировка
     const sortList = [
-      { key: 'bggRating', title: 'Рейтинг' },
-      { key: 'title', title: 'Название' },
+      { key: 'bggRating' as SortType, title: 'Рейтинг' },
+      { key: 'title' as SortType, title: 'Название' },
     ];
-    const keysSortList = sortList.map(item => item.key);
-    type sortTypes = typeof keysSortList[number];
-    const currentSort = ref<sortTypes>('bggRating');
-    const changeSort = (value: sortTypes):void => {
+    const currentSort = ref<SortType>('bggRating');
+    const changeSort = (value: SortType):void => {
       currentSort.value = value;
       getList();
     };
@@ -62,7 +60,7 @@ export default defineComponent({
     const openDetail = (path: string):void => {
       store.commit('setCurrentSort', currentSort);
       store.commit('setCurrentView', currentView);
-      router.push(`/${path}`);
+      router.push(`/${path.toLowerCase()}`);
     }
 
 

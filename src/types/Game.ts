@@ -13,3 +13,5 @@ export interface GameCard {
 }
 
 export type ListView = 'card' | 'grid'
+
+export type SortType = 'bggRating' | 'title'
