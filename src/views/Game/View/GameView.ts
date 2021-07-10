@@ -1,11 +1,11 @@
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed, ComputedRef } from 'vue';
 import { useRoute } from 'vue-router';
 
 import {
   getGameItem
 } from '@/api';
 
-import { GameList } from '@/types/Game';
+import { GameCard } from '@/types/Game';
 
 export default defineComponent({
   name: 'GameView',
@@ -15,8 +15,9 @@ export default defineComponent({
   setup() {
     const route = useRoute();
 
-    // const game = ref<GameList>({});
-    const gameData = ref({
+    const gameData = ref<GameCard>({
+      title: '',
+      description: '',
       props: []
     });
     const getData = async():Promise<void> => {
@@ -26,14 +27,14 @@ export default defineComponent({
         props: [
           { title: 'Рейтинг', value: game.bggRating, icon: 'el-icon-s-data' },
           { title: 'Комментарии', value: game.commentsTotal ? `${game.commentsTotal} шт` : '', icon: 'el-icon-s-comment' },
-          { title: 'Игроков', value: `${game.playersMin} - ${game.playersMax}`, icon: 'el-icon-user-solid' },
+          { title: 'Игроков', value: game.playersMin === game.playersMax ? game.playersMax : `${game.playersMin} - ${game.playersMax}`, icon: 'el-icon-user-solid' },
           { title: 'Возраст', value: `от ${game.playersAgeMin} лет`, icon: 'el-icon-user' },
         ]
       };
     }
     getData();
 
-    const gameProps = computed(() => gameData.value?.props?.filter(({value}) => value));
+    const gameProps: ComputedRef<GameCard['props']> = computed(() => gameData.value?.props?.filter(({value}) => value));
 
     return { gameData, gameProps };
   },

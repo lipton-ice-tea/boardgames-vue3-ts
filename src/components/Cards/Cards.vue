@@ -1,9 +1,9 @@
 <template>
     <div class="cards">
         <div
-            v-for="game in computedList"
+            v-for="game in computedList || []"
             class="card"
-            @click="openDetail(game.alias)"
+            @click="openDetail(game.alias || '')"
             :key="game.alias">
             <el-image class="card__img game-img" :src="game.photoUrl"/>
             <!-- <img v-if="game.photoUrl" :src="game.photoUrl" :alt="game.title"> -->

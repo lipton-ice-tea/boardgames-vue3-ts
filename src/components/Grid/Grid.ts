@@ -1,12 +1,12 @@
 import { defineComponent, PropType } from 'vue';
-import { GameList } from '@/types/Game';
+import { GameCard } from '@/types/Game';
 
 export default defineComponent({
   name: 'Grid',
   props: {
     list: {
         required: true,
-        type: Object as PropType<GameList[]>
+        type: Object as PropType<GameCard[]>
     },
   },
   setup(props, { emit }) {

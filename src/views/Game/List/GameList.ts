@@ -10,7 +10,7 @@ import {
   getGameList
 } from '@/api';
 
-import { GameList, ListView, SortType } from '@/types/Game';
+import { GameCard, ListView, SortType } from '@/types/Game';
 
 export default defineComponent({
   name: 'GameList',
@@ -39,14 +39,14 @@ export default defineComponent({
 
 
     // Список
-    const gameList = ref<GameList[]>([]);
+    const gameList = ref<GameCard[]>([]);
     const getList = async():Promise<void> => {
       const request: GetRequest = {
         limit: 20,
         sort: currentSort.value
       }
       const { data } = await getGameList(request)
-      gameList.value = data.filter((item: GameList) => item.alias);
+      gameList.value = data.filter((item: GameCard) => item.alias);
     }
 
 

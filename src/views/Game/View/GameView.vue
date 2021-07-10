@@ -9,21 +9,17 @@
                 <h1>{{ gameData.title }}</h1>
                 <div class="game-detail__props">
                     <div
-                        v-for="(prop, i) in gameProps"
+                        v-for="(prop, i) in gameProps || []"
                         class="detail-prop"
                         :key="i">
-                        <i :class="prop.icon"></i> {{ prop.value }}
+                        <el-tooltip :content="prop.title" placement="bottom">
+                            <p><i :class="prop.icon"></i> {{ prop.value }}</p>
+                        </el-tooltip>
                     </div>
                 </div>
             </div>
 
             <div class="game-detail__descr" v-html="gameData.description"></div>
-<!-- <hr>
-            <h3>Характеристики</h3>
-            <el-table :data="gameData.props" :show-header="false" class="game-detail__props">
-                <el-table-column prop="title"></el-table-column>
-                <el-table-column prop="value"></el-table-column>
-            </el-table> -->
         </div>
     </div>
 </template>

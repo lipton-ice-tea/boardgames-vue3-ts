@@ -1,7 +1,7 @@
 .game-detail {
     display: flex;
     gap: 4rem;
-    margin: auto;
+    margin: 1rem auto;
     max-width: 1300px;
     &__aside {
         width: 50rem;
@@ -28,6 +28,7 @@
         margin-top: 1.3rem;
         flex-shrink: 0;
         color: $grey;
+        user-select: none;
     }
     &__descr {
         line-height: 1.4;

@@ -9,7 +9,11 @@
         <el-table-column prop="bggRating" label="Рейтинг" width="150"></el-table-column>
         <el-table-column prop="commentsTotal" label="Комментарии" width="150"></el-table-column>
         <el-table-column prop="year" label="Год" width="150"></el-table-column>
-        <el-table-column prop="playersMin" label="Игроков" width="150"></el-table-column>
+        <el-table-column prop="playersMin" label="Игроков" width="150">
+            <template #default="scope">
+                {{ scope.row.playersMin === scope.row.playersMax ? scope.row.playersMax : `${scope.row.playersMin} - ${scope.row.playersMax}` }}
+            </template>
+        </el-table-column>
         <el-table-column prop="playersAgeMin" label="Возраст" width="150"></el-table-column>
         <el-table-column prop="alias" width="150">
             <template #default="scope">
