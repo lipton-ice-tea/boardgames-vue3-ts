@@ -10,7 +10,7 @@ import {
   getGameList
 } from '@/api';
 
-import { GameCard, ListView, SortType } from '@/types/Game';
+import { GameList, ListView, SortType } from '@/types/Game';
 
 export default defineComponent({
   name: 'GameList',
@@ -22,6 +22,7 @@ export default defineComponent({
     const router = useRouter();
     const store = useStore();
 
+
     // Сортировка
     const sortList = [
       { key: 'bggRating' as SortType, title: 'Рейтинг' },
@@ -32,16 +33,20 @@ export default defineComponent({
       currentSort.value = value;
       getList();
     };
+    onBeforeMount(() => {
+      changeSort(store?.state?.currentSort || currentSort.value);
+    });
+
 
     // Список
-    const gameList = ref<GameCard[]>([]);
+    const gameList = ref<GameList[]>([]);
     const getList = async():Promise<void> => {
       const request: GetRequest = {
         limit: 20,
         sort: currentSort.value
       }
       const { data } = await getGameList(request)
-      gameList.value = data.filter((item: GameCard) => item.alias);
+      gameList.value = data.filter((item: GameList) => item.alias);
     }
 
 
@@ -54,6 +59,9 @@ export default defineComponent({
       { key: 'card' as ListView, icon: 'el-icon-menu' },
       { key: 'grid' as ListView, icon: 'el-icon-s-unfold' },
     ];
+    onBeforeMount(() => {
+      if (store.state.currentView) changeView(store.state.currentView);
+    });
 
 
     // Переход к детальной странице
@@ -63,12 +71,6 @@ export default defineComponent({
       router.push(`/${path.toLowerCase()}`);
     }
 
-
-    //////
-    onBeforeMount(() => {
-      if (store.state.currentView) changeView(store.state.currentView);
-      changeSort(store?.state?.currentSort || currentSort.value);
-    });
 
     return { gameList, currentView, changeView, viewTypes, currentSort, sortList, changeSort, openDetail }
   },

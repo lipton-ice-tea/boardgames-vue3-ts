@@ -1,0 +1,41 @@
+.game-detail {
+    display: flex;
+    gap: 4rem;
+    margin: auto;
+    max-width: 1300px;
+    &__aside {
+        width: 50rem;
+        flex-shrink: 0;
+    }
+    &__main {
+        flex-grow: 1;
+    }
+    &__img {
+        max-width: 50rem;
+        max-height: 50rem;
+        object-fit: contain;
+    }
+    &__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin: 2rem 0 3rem;
+    }
+    &__props {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        margin-top: 1.3rem;
+        flex-shrink: 0;
+        color: $grey;
+    }
+    &__descr {
+        line-height: 1.4;
+    }
+    &__goback {
+        color: $grey;
+        &:hover {
+            color: $primary;
+        }
+    }
+}

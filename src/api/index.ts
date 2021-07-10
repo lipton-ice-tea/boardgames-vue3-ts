@@ -14,3 +14,4 @@ const api = axios.create({
 export default api;
 
 export const getGameList = (params: types.GetRequest):Promise<AxiosResponse> => api.get('/games', { params });
+export const getGameItem = (path: string):Promise<AxiosResponse> => api.get(`/games/${path}`);

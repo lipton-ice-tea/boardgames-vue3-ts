@@ -5,7 +5,7 @@
             class="card"
             @click="openDetail(game.alias)"
             :key="game.alias">
-            <el-image class="card__img game-img" :src="game.photoUrl"></el-image>
+            <el-image class="card__img game-img" :src="game.photoUrl"/>
             <!-- <img v-if="game.photoUrl" :src="game.photoUrl" :alt="game.title"> -->
             <p class="card__title" :class="{'card__title_small': game.title.length > 40 }">{{ game.title }}</p>
             <el-table :data="game.props" :show-header="false">

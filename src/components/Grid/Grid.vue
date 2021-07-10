@@ -2,7 +2,7 @@
     <el-table :data="list">
         <el-table-column prop="photoUrl" width="70">
             <template #default="scope">
-                <el-image class="table-img" :src="scope.row.photoUrl"></el-image>
+                <el-image class="table-img" :src="scope.row.photoUrl"/>
             </template>
         </el-table-column>
         <el-table-column prop="title" label="Название"></el-table-column>

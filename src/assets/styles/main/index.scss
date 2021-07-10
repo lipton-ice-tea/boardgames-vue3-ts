@@ -16,3 +16,10 @@ body {
 table td:last-child {
     text-align: right;
 }
+
+h1 {
+    font-weight: 700;
+    font-size: 5rem;
+    line-height: 0.9;
+    color: $primary;
+}

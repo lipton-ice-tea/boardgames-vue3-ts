@@ -1,4 +1,4 @@
-export interface GameCard {
+export interface GameList {
     title: string,
     photoUrl: string,
     alias: string,
@@ -8,7 +8,6 @@ export interface GameCard {
     playersMin: number,
     playersMax: number,
     playersAgeMin: number,
-    description: string,
     descriptionShort: string,
 }
 
